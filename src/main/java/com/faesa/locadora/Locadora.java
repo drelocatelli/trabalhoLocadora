@@ -49,7 +49,14 @@ public class Locadora {
                 consulta();
             case 3 ->
                 pesquisar();
+            case 0 ->
+                System.exit(0);
         }
+
+        System.out.println("Pressione qualquer tecla para continuar...");
+        scan.nextLine();
+
+        mainMenu();
 
         scan.close();
     }
@@ -77,6 +84,12 @@ public class Locadora {
             case 0 ->
                 mainMenu();
         }
+
+        System.out.println("Pressione qualquer tecla para continuar...");
+        scan.nextLine();
+        scan.nextLine();
+
+        cadastro();
 
         scan.close();
 
@@ -107,6 +120,12 @@ public class Locadora {
            
         }
 
+        System.out.println("Pressione qualquer tecla para continuar...");
+        scan.nextLine();
+        scan.nextLine();
+        
+        consulta();
+
         scan.close();
     }
 
@@ -133,6 +152,12 @@ public class Locadora {
             case 0 ->
                 mainMenu();
         }
+
+        System.out.println("Pressione qualquer tecla para continuar...");
+        scan.nextLine();
+        scan.nextLine();
+
+        pesquisar();
 
         scan.close();
     }
