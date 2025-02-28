@@ -6,6 +6,8 @@ package com.faesa.locadora;
 import controller.ClienteController;
 import controller.FilmeController;
 import controller.LocacaoController;
+import service.ClienteService;
+import service.FilmeService;
 
 import java.util.Scanner;
 
@@ -20,6 +22,9 @@ public class Locadora {
     private static ClienteController clienteController = new ClienteController();
     private static LocacaoController locacaoController = new LocacaoController();
 
+    private static ClienteService clienteService = new ClienteService();
+    private static FilmeService filmeService = new FilmeService();
+
     public static void main(String[] args) {
         mainMenu();
     }
@@ -28,8 +33,8 @@ public class Locadora {
         System.out.println("************************************");
         System.out.println("*************** \033[0;30m\033[1;41mMENU\033[0m ***************");
         System.out.println("1 - CADASTRAR ");
-        System.out.println("2 - CONSULTAR ");
-        System.out.println("3 - PESQUISAR");
+        System.out.println("2 - LISTAR TUDO ");
+        System.out.println("3 - PESQUISAR OU ALTERAR/DELETAR");
         System.out.println("0 - Sair");
         System.out.println("Escolha a opção: ");
         System.out.println("************************************");
@@ -42,6 +47,8 @@ public class Locadora {
                 cadastro();
             case 2 ->
                 consulta();
+            case 3 ->
+                pesquisar();
         }
 
         scan.close();
@@ -62,9 +69,9 @@ public class Locadora {
 
         switch (opcao) {
             case 1 ->
-                filmeController.cadastrar();
+                filmeController.create();
             case 2 ->
-                clienteController.cadastrar();
+                clienteController.create();
             case 3 ->
                 locar();
             case 0 ->
@@ -90,11 +97,11 @@ public class Locadora {
 
         switch (opcao) {
             case 1 ->
-                System.out.println(filmeController.consultar());
+                filmeController.index();
             case 2 ->
-                System.out.println(clienteController.consultar());
+                clienteController.index();
             case 3 ->
-                System.out.println(locacaoController.consultar());
+                locacaoController.index();
             case 0 ->
                 mainMenu();
            
@@ -104,17 +111,41 @@ public class Locadora {
     }
 
     public static void locar() {
-        if (clienteController.quantidade() == 0) {
+        if (clienteService.get().size() == 0) {
             System.out.println("Nenhum cliente cadastrado para locar");
             return;
         }
 
-        if (filmeController.quantidade() == 0) {
+        if (filmeService.get().size() == 0) {
             System.out.println("Nenhum filme cadastrado para locar");
             return;
         }
 
-        locacaoController.cadastrar();
+        locacaoController.create();
         
     }
+
+    public static void pesquisar() {
+        System.out.println("*****************************************");
+        System.out.println("*************** \033[0;30m\033[1;41mPESQUISAR OU ALTERAR/DELETAR\033[0m ***************");
+        System.out.println("1 - FILMES ");
+        System.out.println("2 - CLIENTES ");
+        System.out.println("3 - LOCAÇÕES ");
+        System.out.println("0 - Voltar");
+        System.out.println("Escolha a opção: ");
+        System.out.println("******************************************");
+        System.out.println("******************************************");
+
+        int opcao = scan.nextInt();
+
+        switch (opcao) {
+            case 1 ->
+                filmeController.show();
+            case 0 ->
+                mainMenu();
+        }
+
+        scan.close();
+    }
+    
 }
