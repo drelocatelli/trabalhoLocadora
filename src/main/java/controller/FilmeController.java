@@ -146,6 +146,44 @@ public class FilmeController {
         }
     }
 
+    public void alterarQuantidadePorIndice(int indice, long quantidade) {
+        try {
+            // Lê o arquivo onde os dados dos filmes estão armazenados
+            File file = new File(this.path);
+            if (!file.exists()) {
+                System.out.println("Arquivo de filmes não encontrado.");
+                return;
+            }
+    
+            List<String> lines = Files.readAllLines(file.toPath());
+            
+            // Verifica se o índice é válido
+            if (indice < 0 || indice >= lines.size()) {
+                System.out.println("Índice inválido.");
+                return;
+            }
+    
+            // Obtém o filme pela linha especificada pelo índice
+
+            ArrayList<Filme> filmes = getFilmes();
+            Filme filme = filmes.get(indice);
+            filme.setQuantidade(quantidade);
+
+            System.out.println("Quantidade restantes: " + filme.getQuantidade());
+    
+            // Atualiza a linha do arquivo com os novos dados
+            lines.set(indice, filme.toString());
+    
+            // Reescreve o arquivo com a atualização
+            Files.write(file.toPath(), lines);
+            System.out.println("Arquivo atualizado com sucesso.");
+    
+        } catch (IOException ex) {
+            System.out.println("Erro ao alterar o status de locação.");
+            Logger.getLogger(FilmeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public void alterarStatusLocacaoPorIndice(int indice, boolean isLocado) {
         try {
             // Lê o arquivo onde os dados dos filmes estão armazenados

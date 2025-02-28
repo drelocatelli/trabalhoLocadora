@@ -106,13 +106,11 @@ public class Locadora {
     public static void locar() {
         if (clienteController.quantidade() == 0) {
             System.out.println("Nenhum cliente cadastrado para locar");
-            mainMenu();
             return;
         }
 
         if (filmeController.quantidade() == 0) {
             System.out.println("Nenhum filme cadastrado para locar");
-            mainMenu();
             return;
         }
 

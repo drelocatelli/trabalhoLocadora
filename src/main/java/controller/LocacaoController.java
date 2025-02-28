@@ -138,9 +138,24 @@ public class LocacaoController {
 
                 System.out.println("Escolha o filme: ");
                 int opcaoFilme = scan.nextInt();
-                locacao.setFilme(filmes.get(opcaoFilme));
+                Filme filmeLocado = filmes.get(opcaoFilme);
+                
+                if(filmeLocado.getQtdEstoque() == 0) {
+                    System.out.println("Filme sem estoque");
+                    return;
+                }
 
+                if(filmeLocado.getQuantidade() == 0) {
+                    System.out.println("Não há mais cópias disponíveis para locação");
+                    return;
+                }
+
+                filmeLocado.setQuantidade(filmeLocado.getQuantidade() - 1);
                 filmeController.alterarStatusLocacaoPorIndice(opcaoFilme, true);
+                filmeController.alterarQuantidadePorIndice(opcaoFilme, filmeLocado.getQuantidade());
+
+                locacao.setFilme(filmeLocado);
+
 
                 printWriter.println(locacao);
 
