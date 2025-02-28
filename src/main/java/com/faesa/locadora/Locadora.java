@@ -130,7 +130,7 @@ public class Locadora {
         System.out.println("*************** \033[0;30m\033[1;41mPESQUISAR OU ALTERAR/DELETAR\033[0m ***************");
         System.out.println("1 - FILMES ");
         System.out.println("2 - CLIENTES ");
-        System.out.println("3 - LOCAÇÕES ");
+        System.out.println("3 - REMOVER LOCAÇÃO ");
         System.out.println("0 - Voltar");
         System.out.println("Escolha a opção: ");
         System.out.println("******************************************");
@@ -143,6 +143,8 @@ public class Locadora {
                 filmeController.show();
             case 2 ->
                 clienteController.show();
+            case 3 -> 
+                locacaoController.delete();
             case 0 ->
                 mainMenu();
         }

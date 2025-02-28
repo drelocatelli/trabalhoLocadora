@@ -4,6 +4,10 @@
  */
 package controller;
 
+import java.util.Scanner;
+
+import entity.Locacao;
+import service.FileService;
 import service.LocacaoService;
 
 /**
@@ -12,6 +16,7 @@ import service.LocacaoService;
  */
 public class LocacaoController {
 
+  private Scanner scan = new Scanner(System.in);
   LocacaoService locacaoService = new LocacaoService();
 
   public void index() {
@@ -20,6 +25,32 @@ public class LocacaoController {
 
   public void create() {
     locacaoService.cadastrar();
+  }
+
+  public void delete() {
+    var locacoes = locacaoService.getLocacoes();
+
+    if(locacoes.size() == 0) {
+        System.out.println("Nenhuma locacao cadastrada");
+        return;
+    }
+
+    for(int i = 0; i < locacoes.size(); i++) {
+        System.out.println((i + 1) + " - " + locacoes.get(i));
+    }
+
+    System.out.println("Escolha uma locação: ");
+    int opcao = scan.nextInt();
+
+    System.out.println("Locação escolhida: " + locacoes.get(opcao - 1));
+
+    if(opcao < 1 || opcao > locacoes.size()) {
+        System.out.println("Opção inválida");
+        return;
+    }
+
+    FileService<Locacao> fileService = new FileService<>(locacaoService.path);
+    fileService.delete(locacoes.get(opcao - 1));
   }
 
 }
