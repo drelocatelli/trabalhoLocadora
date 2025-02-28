@@ -16,6 +16,24 @@ public class Filme {
     private long qtdEstoque = 0;
     private boolean isLocado = false;
 
+    public Filme(Filme filme) {
+        this.codigo = filme.getCodigo();
+        this.titulo = filme.getTitulo();
+        this.genero = filme.getGenero();
+        this.quantidade = filme.getQuantidade();
+        this.qtdEstoque = filme.getQtdEstoque();
+        this.isLocado = filme.getIsLocado();
+    }
+
+    public Filme(String codigo, String titulo, String genero, long quantidade, long qtdEstoque, boolean isLocado) {
+        this.codigo = codigo;
+        this.titulo = titulo;
+        this.genero = genero;
+        this.quantidade = quantidade;
+        this.qtdEstoque = qtdEstoque;
+        this.isLocado = isLocado;
+    }
+
     public Filme() {
         super();
     }
@@ -60,7 +78,7 @@ public class Filme {
         this.qtdEstoque = qtdEstoque;
     }
 
-    public boolean isIsLocado() {
+    public boolean getIsLocado() {
         return isLocado;
     }
 

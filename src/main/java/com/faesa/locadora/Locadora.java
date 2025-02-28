@@ -141,6 +141,8 @@ public class Locadora {
         switch (opcao) {
             case 1 ->
                 filmeController.show();
+            case 2 ->
+                clienteController.show();
             case 0 ->
                 mainMenu();
         }

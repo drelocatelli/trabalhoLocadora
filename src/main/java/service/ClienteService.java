@@ -91,4 +91,51 @@ public class ClienteService {
 
         } while (opcao.equals("s"));
     }
+
+    public ArrayList<Cliente> search(String nome) {
+        var clientes = get();
+        ArrayList<Cliente> clientesEncontrados = new ArrayList<>();
+
+        for (Cliente cliente : clientes) {
+            if (cliente.getNome().toLowerCase().contains(nome.toLowerCase())) {
+                clientesEncontrados.add(cliente);
+            }
+        }
+
+        return clientesEncontrados;
+    }
+
+    public Cliente update(int clientIdx, Cliente cliente) {
+        System.out.println("Digite o número da opção que deseja alterar:");
+        String opcao = scan.nextLine();
+
+        System.out.println("Digite o novo valor:");
+
+        Cliente newCliente = new Cliente(cliente);
+        
+        switch (opcao) {
+            case "1":
+                newCliente.setCodigo(scan.nextLine());
+                break;
+            case "2":
+                newCliente.setNome(scan.nextLine());
+                break;
+            case "3":
+                newCliente.setGenero(scan.nextLine());
+                break;
+            case "4":
+                newCliente.setCpf(scan.nextLine());
+                break;
+            case "5":
+                newCliente.setEndereco(scan.nextLine());
+                break;
+            default:
+                System.out.println("Opção inválida!");
+        }
+
+        FileService<Cliente> fileService = new FileService(this.path);
+        fileService.updateItem(cliente, newCliente);
+
+        return newCliente;
+    }
 }

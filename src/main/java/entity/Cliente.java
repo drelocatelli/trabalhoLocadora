@@ -16,6 +16,25 @@ public class Cliente {
     private String cpf;
     private String endereco;
 
+    public Cliente() {
+    }
+
+    public Cliente(Cliente cliente) {
+        this.codigo = cliente.getCodigo();
+        this.nome = cliente.getNome();
+        this.genero = cliente.getGenero();
+        this.cpf = cliente.getCpf();
+        this.endereco = cliente.getEndereco();
+    }
+
+    public Cliente(String codigo, String nome, String genero, String cpf, String endereco) {
+        this.codigo = codigo;
+        this.nome = nome;
+        this.genero = genero;
+        this.cpf = cpf;
+        this.endereco = endereco;
+    }
+
     public String getCodigo() {
         return codigo;
     }

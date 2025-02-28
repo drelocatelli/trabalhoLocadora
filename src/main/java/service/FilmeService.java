@@ -68,45 +68,45 @@ public class FilmeService {
 
     public Filme create() {
         Filme filme = new Filme();
-            String opcao;
-            do {
-                System.out.println("_____________________________________________\n");
-                System.out.println("      Cadastrando filme da locadora   ");
-                System.out.println("_____________________________________________\n\n");
+        String opcao;
+        do {
+            System.out.println("_____________________________________________\n");
+            System.out.println("      Cadastrando filme da locadora   ");
+            System.out.println("_____________________________________________\n\n");
 
-                System.out.printf("Informe o codigo do filme que sera cadastrado\n");
-                String codigo = scan.nextLine();
-                filme.setCodigo(codigo);
+            System.out.printf("Informe o codigo do filme que sera cadastrado\n");
+            String codigo = scan.nextLine();
+            filme.setCodigo(codigo);
 
-                System.out.printf("Informe o titulo do filme:\n");
-                String titulo = scan.nextLine();
-                filme.setTitulo(titulo);
+            System.out.printf("Informe o titulo do filme:\n");
+            String titulo = scan.nextLine();
+            filme.setTitulo(titulo);
 
-                System.out.printf("Informe  o genero do filme:\n");
-                String genero = scan.nextLine();
-                filme.setGenero(genero);
+            System.out.printf("Informe  o genero do filme:\n");
+            String genero = scan.nextLine();
+            filme.setGenero(genero);
 
-                System.out.printf("Informe a quantidade do estoque:\n");
-                long qtdEstoque = scan.nextLong();
-                filme.setQtdEstoque(qtdEstoque);
+            System.out.printf("Informe a quantidade do estoque:\n");
+            long qtdEstoque = scan.nextLong();
+            filme.setQtdEstoque(qtdEstoque);
 
-                System.out.printf("Informe a quantidade disponivel para locacao :\n");
-                long quantidade = scan.nextLong();
-                filme.setQuantidade(quantidade);
+            System.out.printf("Informe a quantidade disponivel para locacao :\n");
+            long quantidade = scan.nextLong();
+            filme.setQuantidade(quantidade);
 
-                FileService<Filme> fileService = new FileService<>(this.path);
-                fileService.insert(filme);
+            FileService<Filme> fileService = new FileService<>(this.path);
+            fileService.insert(filme);
 
-                System.out.println("Filme cadastrado com sucesso");
-                System.out.println("__________________________________________________");
-                System.out.println("_____________________________________________\n");
-                System.out.println("Deseja cadastrar um novo filme S para sim ou N para Nao:  ");
-                System.out.println("_____________________________________________");
+            System.out.println("Filme cadastrado com sucesso");
+            System.out.println("__________________________________________________");
+            System.out.println("_____________________________________________\n");
+            System.out.println("Deseja cadastrar um novo filme S para sim ou N para Nao:  ");
+            System.out.println("_____________________________________________");
 
-                scan.nextLine();
-                opcao = scan.nextLine().toLowerCase();
+            scan.nextLine();
+            opcao = scan.nextLine().toLowerCase();
 
-            } while (opcao.equals("s"));
+        } while (opcao.equals("s"));
 
         return filme;
     }
@@ -172,7 +172,7 @@ public class FilmeService {
             Filme filme = filmes.get(indice);
             filme.setIsLocado(isLocado);
 
-            System.out.println("Status de locação alterado para: " + filme.isIsLocado());
+            System.out.println("Status de locação alterado para: " + filme.getIsLocado());
 
             // Atualiza a linha do arquivo com os novos dados
             lines.set(indice, filme.toString());
@@ -201,59 +201,40 @@ public class FilmeService {
     }
 
     public Filme update(Filme filme) {
-        try {
-            File file = new File(this.path);
+        System.out.println("Digite o número da opção que você deseja alterar:");
+        String opcao = scan.nextLine();
 
-            if (file.exists()) {
+        System.out.println("Digite o novo valor:");
 
-                List<String> lines = Files.readAllLines(file.toPath());
-                int lineIdx = lines.indexOf(filme.toString());
+        Filme newFilme = new Filme(filme);
 
-                // altera se achar a linha
-                if (lineIdx != -1) {
-                    System.out.println("Digite o número da opção que você deseja alterar:");
-                    String opcao = scan.nextLine();
-
-                    System.out.println("Digite o novo valor:");
-
-                    Filme newFilme = new Filme();
-                    switch (opcao) {
-                        case "1":
-                            newFilme.setCodigo(scan.nextLine());
-                            break;
-                        case "2":
-                            newFilme.setTitulo(scan.nextLine());
-                            break;
-                        case "3":
-                            newFilme.setGenero(scan.nextLine());
-                            break;
-                        case "4":
-                            newFilme.setQuantidade(scan.nextLong());
-                            break;
-                        case "5":
-                            newFilme.setQtdEstoque(scan.nextLong());
-                            break;
-                        case "6":
-                            newFilme.setIsLocado(scan.nextBoolean());
-                            break;
-                        default:
-                            System.out.println("Opção inválida!");
-                    }
-
-                    FileService<Filme> fileService = new FileService<>(this.path);
-                    fileService.updateItem(filme, newFilme);
-                }
-
-            } else {
-                System.out.println("Arquivo nao encontrado");
-            }
-
-        } catch (IOException ex) {
-            System.out.println("Erro ao alterar o filme");
-            Logger.getLogger(FilmeController.class.getName()).log(Level.SEVERE, null, ex);
+        switch (opcao) {
+            case "1":
+                newFilme.setCodigo(scan.nextLine());
+                break;
+            case "2":
+                newFilme.setTitulo(scan.nextLine());
+                break;
+            case "3":
+                newFilme.setGenero(scan.nextLine());
+                break;
+            case "4":
+                newFilme.setQuantidade(scan.nextLong());
+                break;
+            case "5":
+                newFilme.setQtdEstoque(scan.nextLong());
+                break;
+            case "6":
+                newFilme.setIsLocado(scan.nextBoolean());
+                break;
+            default:
+                System.out.println("Opção inválida!");
         }
 
-        return filme;
+        FileService<Filme> fileService = new FileService<>(this.path);
+        fileService.updateItem(filme, newFilme);
+
+        return newFilme;
     }
 
 }

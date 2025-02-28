@@ -79,9 +79,6 @@ public class FileService<T> {
 
                 int lineIdx = lines.indexOf(item.toString());
 
-                System.out.println("DEBUG:::::::::::::");
-                System.out.println(item.toString());
-
                 // altera se achar a linha
                 if (lineIdx != -1) {
                     lines.set(lineIdx, newValue.toString());
