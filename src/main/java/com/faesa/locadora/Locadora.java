@@ -73,7 +73,7 @@ public class Locadora {
             case 2 ->
                 clienteController.create();
             case 3 ->
-                locar();
+                locacaoController.create();
             case 0 ->
                 mainMenu();
         }
@@ -108,21 +108,6 @@ public class Locadora {
         }
 
         scan.close();
-    }
-
-    public static void locar() {
-        if (clienteService.get().size() == 0) {
-            System.out.println("Nenhum cliente cadastrado para locar");
-            return;
-        }
-
-        if (filmeService.get().size() == 0) {
-            System.out.println("Nenhum filme cadastrado para locar");
-            return;
-        }
-
-        locacaoController.create();
-        
     }
 
     public static void pesquisar() {

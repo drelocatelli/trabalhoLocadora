@@ -7,7 +7,9 @@ package controller;
 import java.util.Scanner;
 
 import entity.Locacao;
+import service.ClienteService;
 import service.FileService;
+import service.FilmeService;
 import service.LocacaoService;
 
 /**
@@ -24,19 +26,32 @@ public class LocacaoController {
   }
 
   public void create() {
+    ClienteService clienteService = new ClienteService();
+    FilmeService filmeService = new FilmeService();
+    
+    if (clienteService.get().size() == 0) {
+      System.out.println("Nenhum cliente cadastrado para locar");
+      return;
+    }
+
+    if (filmeService.get().size() == 0) {
+      System.out.println("Nenhum filme cadastrado para locar");
+      return;
+    }
+
     locacaoService.cadastrar();
   }
 
   public void delete() {
     var locacoes = locacaoService.getLocacoes();
 
-    if(locacoes.size() == 0) {
-        System.out.println("Nenhuma locacao cadastrada");
-        return;
+    if (locacoes.size() == 0) {
+      System.out.println("Nenhuma locacao cadastrada");
+      return;
     }
 
-    for(int i = 0; i < locacoes.size(); i++) {
-        System.out.println((i + 1) + " - " + locacoes.get(i));
+    for (int i = 0; i < locacoes.size(); i++) {
+      System.out.println((i + 1) + " - " + locacoes.get(i));
     }
 
     System.out.println("Escolha uma locação: ");
@@ -44,9 +59,9 @@ public class LocacaoController {
 
     System.out.println("Locação escolhida: " + locacoes.get(opcao - 1));
 
-    if(opcao < 1 || opcao > locacoes.size()) {
-        System.out.println("Opção inválida");
-        return;
+    if (opcao < 1 || opcao > locacoes.size()) {
+      System.out.println("Opção inválida");
+      return;
     }
 
     FileService<Locacao> fileService = new FileService<>(locacaoService.path);
