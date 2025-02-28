@@ -1,0 +1,34 @@
+clientes.txt
+filmes.txt
+locacoes.txt
+todo
+
+# Diretórios de build
+bin/
+target/
+build/
+dist/
+
+# Arquivos de classe e JAR
+*.class
+*.jar
+*.war
+*.ear
+
+# IDEs
+.idea/
+*.iml
+.settings/
+.classpath
+.project
+nbproject/private/
+
+# Logs e arquivos temporários
+*.log
+*.tmp
+*.bak
+
+# Outros
+/out/
+.DS_Store
+Thumbs.db
