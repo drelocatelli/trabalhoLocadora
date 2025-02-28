@@ -3,19 +3,14 @@ package service;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import controller.FilmeController;
 import entity.Cliente;
 import entity.Filme;
 import entity.Locacao;
@@ -23,8 +18,6 @@ import entity.Locacao;
 public class LocacaoService {
       public String path = "locacoes.txt";
     private static Scanner scan = new Scanner(System.in);
-    private PrintWriter printWriter = null;
-    private FileWriter fileWriter = null;
 
     private FilmeService filmeService = new FilmeService();
     private ClienteService clienteService = new ClienteService();
@@ -96,12 +89,7 @@ public class LocacaoService {
     }
 
     public void cadastrar() {
-        try {
-            fileWriter = new FileWriter(this.path, true);
-            printWriter = new PrintWriter(fileWriter);
-
             String opcao;
-
             do {
 
                 System.out.println("_____________________________________________\n");
@@ -148,8 +136,8 @@ public class LocacaoService {
 
                 locacao.setFilme(filmeLocado);
 
-
-                printWriter.println(locacao);
+                FileService<Locacao> fileService = new FileService(this.path);
+                fileService.insert(locacao);
 
                 System.out.println("_____________________________________________\n");
                 System.out.println("Deseja cadastrar uma nova locação S para sim ou N para Nao:  ");
@@ -160,16 +148,5 @@ public class LocacaoService {
 
             } while (opcao.equals("s"));
 
-        } catch (IOException ex) {
-            System.out.println("Não foi possível cadastrar locação");
-            Logger.getLogger(FilmeController.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (printWriter != null) {
-                printWriter.close(); // Fechar o PrintWriter apenas uma vez
-            }
-            if (scan != null) {
-                scan.close(); // Fechar o Scanner apenas uma vez
-            }
-        }
     }
 }

@@ -7,6 +7,7 @@ package controller;
 import java.util.Scanner;
 
 import entity.Filme;
+import service.FileService;
 import service.FilmeService;
 
 /**
@@ -62,9 +63,8 @@ public class FilmeController {
             System.out.println("\nFilme alterado para:");
             System.out.println(updatedFilme);
         } else if(opcao == 2) {
-            var deletedFilme = filmeService.delete(filme);
-            System.out.println("\nFilme deletado:");
-            System.out.println(deletedFilme);
+            FileService<Filme> fileService = new FileService(filmeService.path);
+            fileService.delete(filme);
         }
 
     }
